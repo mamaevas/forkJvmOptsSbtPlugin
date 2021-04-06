@@ -1,0 +1,16 @@
+...
+
+useCoursier := false  // needed to work by proxy
+
+// run app in fork mode (needed to run with sbt-kanela-runner)
+fork           := true // run program in forked JVM - so exiting it won't kill sbt
+trapExit       := false // sbt don't prevent process from exiting
+connectInput   := true // forked process still reads from std-in
+outputStrategy := Some(StdoutOutput) // prevent output from prepending [info]
+Global / cancelable := true
+
+// replace jvmOpts for forked app
+enablePlugins(ReadJvmOptsForkPlugin)
+javaOptions ++= readJvmOptsForFork.value // обновляем jvmOpts для запускаемой jvm из файла
+
+...
